@@ -111,8 +111,8 @@
           </div>
           <div class="comment-footer">
             <div class="likes">
-              <span class="likes-counter">${student.like}</span>
-              <button class="like-button"></button>
+              <span data-like="0" class="likes-counter">${student.like}</span>
+              <button data-index="pressLike" class="like-button"></button>
             </div>
           </div>
         </li>`;
@@ -120,8 +120,8 @@
 				listElement.innerHTML = commentatorHTML;
 			};
 
-		renderCommentators();
-
+			buttonElement.addEventListener("click", () => {
+				// const oldlist = listElement.innerHTML;
 				//Добавляю нового комментатора
 				commentators.push({
 				name: acceptName.value,
@@ -131,20 +131,71 @@
 				isLike: false,
 			});
 			renderCommentators();
+		});
+		renderCommentators();
 
-		// const addlikeEl = () => {
-		// 			//Снова пишу функционал лайка.
-		// 			const likesElements = document.querySelectorAll('.likes');
-		// 	// console.log(likesElements);
-		// 	for (const likesElement of likesElements) {
-		// 		likesElement.addEventListener('click', () => {
-		// 			console.log('1');
-		// 		});
-		// 	};
-		// };
-
+		const buttonLike = document.querySelectorAll('.like-button');
+		buttonLike.forEach((button, index) => {
+			button.addEventListener('click', () => {
 		
+				renderCommentators();
+			});
+		});
+		
+				// listElement.innerHTML = oldlist + `<li class="comment">
+			  //     <div class="comment-header">
+			  //       ${acceptName.value}
+			  //       <div>${formattedDate}  ${formattedTime}</div>
+			  //     </div>
+			  //     <div class="comment-body">
+			  //       <div class="comment-text">
+			  //         ${acceptComment.value}
+			  //       </div>
+			  //     </div>
+			  //     <div class="comment-footer">
+			  //       <div class="likes">
+			  //         <span class="likes-counter">0</span>
+			  //         <button class="like-button"></button>
+			  //       </div>
+			  //     </div>
+			  //   </li>`;
+	
+
+
+
+			// Добавляю красный фоновый цвет при незаполненом поле (Эта функция оказывается бессмысленной после создания неактивной кнопки)
+		// buttonElement.addEventListener('click', () => {
+		// 	acceptComment.classList.remove("error");
+		// 	acceptName.classList.remove("error");
+		// 	if (acceptName.value === "" || acceptComment.value === "") {
+    //     acceptName.classList.add("error");
+		// 		acceptComment.classList.add("error");
+    //     return;
+    //   };
+		// });
+	
+// Так же делаю основной функционал добавления комментария 
+		// 	const oldlist = listElement.innerHTML;
 			
+		// 	listElement.innerHTML = oldlist + `<li class="comment">
+    //       <div class="comment-header">
+    //         ${acceptName.value}
+    //         <div>${formattedDate}  ${formattedTime}</div>
+    //       </div>
+    //       <div class="comment-body">
+    //         <div class="comment-text">
+    //           ${acceptComment.value}
+    //         </div>
+    //       </div>
+    //       <div class="comment-footer">
+    //         <div class="likes">
+    //           <span class="likes-counter">0</span>
+    //           <button class="like-button"></button>
+    //         </div>
+    //       </div>
+    //     </li>`
+		// });
+	
 		// // Делаю доп.задание отправляю коммент по нажатию клавиши
 		// document.addEventListener('keydown', function(e) {
 		// 		if (e.key === 'Enter') {
@@ -174,41 +225,6 @@
 	// 	};
 	// });
 
-	// // Добавляю красный фоновый цвет при незаполненом поле (Эта функция оказывается бессмысленной после создания неактивной кнопки)
-	// 	buttonElement.addEventListener('click', () => {
-	// 		acceptComment.classList.remove("error");
-	// 		acceptName.classList.remove("error");
-	// 		if (acceptName.value === "" || acceptComment.value === "") {
-  //       acceptName.classList.add("error");
-	// 			acceptComment.classList.add("error");
-  //       return;
-  //     };
-	// 	});
-			
-
-			// addlikeEl();
-			
-// Так же делаю основной функционал добавления комментария 
-		// 	const oldlist = listElement.innerHTML;
-			
-		// 	listElement.innerHTML = oldlist + `<li class="comment">
-    //       <div class="comment-header">
-    //         ${acceptName.value}
-    //         <div>${formattedDate}  ${formattedTime}</div>
-    //       </div>
-    //       <div class="comment-body">
-    //         <div class="comment-text">
-    //           ${acceptComment.value}
-    //         </div>
-    //       </div>
-    //       <div class="comment-footer">
-    //         <div class="likes">
-    //           <span class="likes-counter">0</span>
-    //           <button class="like-button"></button>
-    //         </div>
-    //       </div>
-    //     </li>`
-		// });
-	
   </script>
 </html>
+
