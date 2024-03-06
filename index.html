@@ -98,20 +98,20 @@
 
 			//Рендер функция
 			const renderCommentators = () => {
-			const commentatorHTML = commentators.map((student) => {
+			const commentatorHTML = commentators.map((commentator) => {
 					return `<li class="comment">
           <div class="comment-header">
-            ${student.name}
-            <div>${student.data}</div>
+            ${commentator.name}
+            <div>${commentator.data}</div>
           </div>
           <div class="comment-body">
             <div class="comment-text">
-              ${student.comment}
+              ${commentator.comment}
             </div>
           </div>
           <div class="comment-footer">
             <div class="likes">
-              <span data-like="0" class="likes-counter">${student.like}</span>
+              <span data-like="0" class="likes-counter">${commentator.like}</span>
               <button data-index="pressLike" class="like-button"></button>
             </div>
           </div>
@@ -134,13 +134,17 @@
 		});
 		renderCommentators();
 
-		const buttonLike = document.querySelectorAll('.like-button');
+		const likeButtonFunction = () => {
+			const buttonLike = document.querySelectorAll('.like-button');
 		buttonLike.forEach((button, index) => {
 			button.addEventListener('click', () => {
-		
+				const index = buttonLike.dataset.index;
+
 				renderCommentators();
 			});
 		});
+		};
+		
 		
 				// listElement.innerHTML = oldlist + `<li class="comment">
 			  //     <div class="comment-header">
