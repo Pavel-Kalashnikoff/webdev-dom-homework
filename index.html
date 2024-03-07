@@ -78,6 +78,30 @@
 		const formattedDate = currentDate.toLocaleDateString('ru-RU');
 		const formattedTime = `${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}`;
 
+		//Добавляю функцию лайка
+		const addLikeButtonEventListener = () => {
+			const likesButtonElement = document.querySelectorAll('.like-button');
+    for (const likeButton of likesButtonElement) {
+			let isLike = false;
+			likeButton.addEventListener("click", event => {
+				event.stopPropagation();
+				isLike = !isLike;
+				likeButton.classList.toggle('-active-like', isLike)
+				const index = likeButton.dataset.index;
+				if (commentators[index].isLike === false) {
+					commentators[index].isLike = true;
+					commentators[index].like++;
+					// likeButton.classList.add('-active-like');
+				} else {
+					commentators[index].isLike = false;
+					commentators[index].like--;
+					// likeButton.classList.remove('-active-like');
+				}
+				renderCommentators();
+			});
+		};
+	};
+
 		//Добавляю массив на основе разметки HTML 
 		const commentators = [
 			{
@@ -92,13 +116,13 @@
 				data: "13.02.22 19:22",
 				comment: "Мне нравится как оформлена эта страница! ❤",
 				like: "75",
-				isLike: true,
+				isLike: false,
 			}
 			];
 
 			//Рендер функция
 			const renderCommentators = () => {
-			const commentatorHTML = commentators.map((commentator) => {
+			const commentatorHTML = commentators.map((commentator, index) => {
 					return `<li class="comment">
           <div class="comment-header">
             ${commentator.name}
@@ -112,12 +136,13 @@
           <div class="comment-footer">
             <div class="likes">
               <span data-like="0" class="likes-counter">${commentator.like}</span>
-              <button data-index="pressLike" class="like-button"></button>
+              <button class="like-button ${commentator.isLike ? '-active-like' : ''}" data-index="${index}" ></button>
             </div>
           </div>
         </li>`;
 				}).join("");
 				listElement.innerHTML = commentatorHTML;
+				addLikeButtonEventListener();
 			};
 
 			buttonElement.addEventListener("click", () => {
@@ -131,21 +156,13 @@
 				isLike: false,
 			});
 			renderCommentators();
+			
 		});
 		renderCommentators();
-
-		const likeButtonFunction = () => {
-			const buttonLike = document.querySelectorAll('.like-button');
-		buttonLike.forEach((button, index) => {
-			button.addEventListener('click', () => {
-				const index = buttonLike.dataset.index;
-
-				renderCommentators();
-			});
-		});
-		};
 		
-		
+
+	
+	
 				// listElement.innerHTML = oldlist + `<li class="comment">
 			  //     <div class="comment-header">
 			  //       ${acceptName.value}
