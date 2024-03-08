@@ -58,7 +58,7 @@
         ></textarea>
         <div class="add-form-row">
           <button id="add-button" class="add-form-button">Написать</button>
-					<!-- <button id="delete-button" class="add-form-button">Удалить</button> -->
+					<button id="delete-button" class="add-form-button">Удалить</button>
         </div>
       </div>
     </div>
@@ -73,10 +73,45 @@
 		const acceptComment = document.getElementById('textarea-accept-comment');
 		const buttonDelete =  document.getElementById('delete-button');
 
-// Ставлю время
+// Ставлю время ПЕРЕПИСАЛ КОД -- теперь дата обнавляется каждую сек.
 		const currentDate = new Date();
 		const formattedDate = currentDate.toLocaleDateString('ru-RU');
 		const formattedTime = `${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}`;
+		
+		function updateFormTime () {
+			const currentDate = new Date();
+			formattedTime = `${currentDate.getHours().toString().padStart(2, '0')} : ${currentDate.getMinutes().toString().padStart(2, '0')}`;
+		}
+
+			// Доп. задание - делаю кнопку неактивной при незаполненом поле
+		function checkInputs() {
+		if (acceptName.value.trim() === "" || acceptComment.value.trim() === "") {
+			buttonElement.disabled = true;
+			buttonElement.classList.add("gray");
+		} else {
+			buttonElement.disabled = false;
+			buttonElement.classList.remove("gray");
+		};
+	};
+		acceptName.addEventListener("input", checkInputs);
+		acceptComment.addEventListener("input", checkInputs);
+		checkInputs();
+
+	// 	// Доп. задание - добавляю кнопку удалить и пишу её функционал
+	
+	buttonDelete.addEventListener('click', () => {
+		const lastIndex = listElement.innerHTML.lastIndexOf('<li class="comment">');
+			if (lastIndex !== -1) {
+			listElement.innerHTML = listElement.innerHTML.substring(0, lastIndex);
+		};
+	});
+	
+		// // Делаю доп.задание отправляю коммент по нажатию клавиши
+		document.addEventListener('keydown', function(e) {
+				if (e.key === 'Enter') {
+					buttonElement.click();
+				}
+			})
 
 		//Добавляю функцию лайка
 		const addLikeButtonEventListener = () => {
@@ -85,8 +120,8 @@
 			let isLike = false;
 			likeButton.addEventListener("click", event => {
 				event.stopPropagation();
-				isLike = !isLike;
-				likeButton.classList.toggle('-active-like', isLike)
+				// isLike = !isLike;
+				// likeButton.classList.toggle('-active-like', isLike);
 				const index = likeButton.dataset.index;
 				if (commentators[index].isLike === false) {
 					commentators[index].isLike = true;
@@ -97,7 +132,9 @@
 					commentators[index].like--;
 					// likeButton.classList.remove('-active-like');
 				}
+				likeButton.classList.toggle('-active-like', commentators[index].isLike);
 				renderCommentators();
+				checkInputs();
 			});
 		};
 	};
@@ -156,10 +193,10 @@
 				isLike: false,
 			});
 			renderCommentators();
-			
+			updateFormTime ();
 		});
 		renderCommentators();
-		
+		checkInputs();
 
 	
 	
@@ -216,35 +253,7 @@
     //       </div>
     //     </li>`
 		// });
-	
-		// // Делаю доп.задание отправляю коммент по нажатию клавиши
-		// document.addEventListener('keydown', function(e) {
-		// 		if (e.key === 'Enter') {
-		// 			buttonElement.click();
-		// 		}
-		// 	})
 
-			// Доп. задание - делаю кнопку неактивной при незаполненом поле
-	// 	function checkInputs() {
-	// 	if (acceptName.value.trim() === "" || acceptComment.value.trim() === "") {
-	// 		buttonElement.disabled = true;
-	// 		buttonElement.classList.add("gray");
-	// 	} else {
-	// 		buttonElement.disabled = false;
-	// 		buttonElement.classList.remove("gray");
-	// 	};
-	// };
-	// 	acceptName.addEventListener("input", checkInputs);
-	// 	acceptComment.addEventListener("input", checkInputs);
-	// 	checkInputs()
-
-	// 	// Доп. задание - добавляю кнопку удалить и пишу её функционал
-	// buttonDelete.addEventListener('click', () => {
-	// 	const lastIndex = listElement.innerHTML.lastIndexOf('<li class="comment">');
-	// 		if (lastIndex !== -1) {
-	// 		listElement.innerHTML = listElement.innerHTML.substring(0, lastIndex);
-	// 	};
-	// });
 
   </script>
 </html>
