@@ -8,7 +8,7 @@
 
   <body>
     <div class="container">
-      <ul id="commet-script" class="comments">
+      <ul id="comment-script" class="comments">
         <!-- <li class="comment">
           <div class="comment-header">
             <div>Глеб Фокин</div>
@@ -68,20 +68,12 @@
     "use strict";
 		// Объявляю константы для хранения данных
 		const buttonElement = document.getElementById('add-button');
-		const listElement = document.getElementById('commet-script');
+		const listElement = document.getElementById('comment-script');
 		const acceptName = document.getElementById('input-accept-name');
 		const acceptComment = document.getElementById('textarea-accept-comment');
 		const buttonDelete =  document.getElementById('delete-button');
 
-// Ставлю время ПЕРЕПИСАЛ КОД -- теперь дата обнавляется каждую сек.
-		const currentDate = new Date();
-		const formattedDate = currentDate.toLocaleDateString('ru-RU');
-		const formattedTime = `${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}`;
-		
-		function updateFormTime () {
-			const currentDate = new Date();
-			formattedTime = `${currentDate.getHours().toString().padStart(2, '0')} : ${currentDate.getMinutes().toString().padStart(2, '0')}`;
-		}
+
 
 			// Доп. задание - делаю кнопку неактивной при незаполненом поле
 		function checkInputs() {
@@ -98,13 +90,26 @@
 		checkInputs();
 
 	// 	// Доп. задание - добавляю кнопку удалить и пишу её функционал
-	
 	buttonDelete.addEventListener('click', () => {
 		const lastIndex = listElement.innerHTML.lastIndexOf('<li class="comment">');
 			if (lastIndex !== -1) {
 			listElement.innerHTML = listElement.innerHTML.substring(0, lastIndex);
 		};
 	});
+	
+	// Функция, которая делает кнопку "удалить" неактивной когда в массиве нет элементов
+	function inactiveDeleteButton() {
+		if (commentators.length === 0) {
+			
+			buttonDelete.disabled = true;
+			buttonDelete.classList.add("gray-delete");
+		} else {
+			buttonDelete.disabled = false;
+			buttonDelete.classList.remove("gray-delete");
+		}
+	};
+	// inactiveDeleteButton();
+
 	
 		// // Делаю доп.задание отправляю коммент по нажатию клавиши
 		document.addEventListener('keydown', function(e) {
@@ -135,6 +140,7 @@
 				likeButton.classList.toggle('-active-like', commentators[index].isLike);
 				renderCommentators();
 				checkInputs();
+				inactiveDeleteButton()
 			});
 		};
 	};
@@ -183,7 +189,10 @@
 			};
 
 			buttonElement.addEventListener("click", () => {
-				// const oldlist = listElement.innerHTML;
+				// Перенёс объявление переменных даты сюда.. Аааа, понял логику) 
+				const currentDate = new Date();
+			const formattedDate = currentDate.toLocaleDateString('ru-RU');
+			const formattedTime = `${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}`;
 				//Добавляю нового комментатора
 				commentators.push({
 				name: acceptName.value,
@@ -197,7 +206,7 @@
 		});
 		renderCommentators();
 		checkInputs();
-
+		inactiveDeleteButton();
 	
 	
 				// listElement.innerHTML = oldlist + `<li class="comment">
