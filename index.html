@@ -73,6 +73,25 @@
 		const acceptComment = document.getElementById('textarea-accept-comment');
 		const buttonDelete =  document.getElementById('delete-button');
 
+		//Добавляю массив на основе разметки HTML 
+		const commentators = [
+			{
+				name: "Глеб Фокин",
+				data: "12.02.22 12:18",
+				comment: "Это будет первый комментарий на этой странице",
+				like: "3",
+				isLike: false,
+			},
+			{
+				name: "Варвара Н.",
+				data: "13.02.22 19:22",
+				comment: "Мне нравится как оформлена эта страница! ❤",
+				like: "75",
+				isLike: false,
+			}
+			];
+ 
+
 			// Доп. задание - делаю кнопку неактивной при незаполненом поле
 		function checkInputs() {
 		if (acceptName.value.trim() === "" || acceptComment.value.trim() === "") {
@@ -89,10 +108,9 @@
 
 	// 	// Доп. задание - добавляю кнопку удалить и пишу её функционал
 	buttonDelete.addEventListener('click', () => {
-		const lastIndex = listElement.innerHTML.lastIndexOf('<li class="comment">');
-			if (lastIndex !== -1) {
-			listElement.innerHTML = listElement.innerHTML.substring(0, lastIndex);
-		};
+		commentators.pop();
+		renderCommentators();
+		checkInputs();
 	});
 	
 	// Функция, которая делает кнопку "удалить" неактивной когда в массиве нет элементов
@@ -140,7 +158,6 @@
 			});
 		};
 	};
-
 	let text; 
 	// ДЗ 2.11 --- Реализую ответ на комментарий
 	const replyToCommentFunction = () => {
@@ -159,25 +176,6 @@
 			});
 		};
 	};
-
-		//Добавляю массив на основе разметки HTML 
-		const commentators = [
-			{
-				name: "Глеб Фокин",
-				data: "12.02.22 12:18",
-				comment: "Это будет первый комментарий на этой странице",
-				like: "3",
-				isLike: false,
-			},
-			{
-				name: "Варвара Н.",
-				data: "13.02.22 19:22",
-				comment: "Мне нравится как оформлена эта страница! ❤",
-				like: "75",
-				isLike: false,
-			}
-			];
-
 			//Рендер функция
 			const renderCommentators = () => {
 			const commentatorHTML = commentators.map((commentator, index) => {
@@ -219,7 +217,13 @@
 				like: "0",
 				isLike: false,
 			});
+			// Очистка поля ввода для комментария и имени после отправления комментария
+			const clearCommmentTextArea = document.querySelector('.add-form-text');
+			const clearName = document.querySelector('.add-form-name');
+			clearCommmentTextArea.value = '';
+			clearName.value = '';
 			renderCommentators();
+			checkInputs();
 		});
 		renderCommentators();
 		checkInputs();
