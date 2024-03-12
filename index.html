@@ -116,7 +116,6 @@
 	// Функция, которая делает кнопку "удалить" неактивной когда в массиве нет элементов
 	function inactiveDeleteButton() {
 		if (commentators.length === 0) {
-			
 			buttonDelete.disabled = true;
 			buttonDelete.classList.add("gray-delete");
 		} else {
@@ -200,6 +199,7 @@
 				listElement.innerHTML = commentatorHTML;
 				addLikeButtonEventListener();
 				replyToCommentFunction();
+				inactiveDeleteButton();
 			};
 			
 
