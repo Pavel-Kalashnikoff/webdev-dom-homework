@@ -77,11 +77,12 @@
 		const buttonDelete =  document.getElementById('delete-button');
 		const waitForLoading = document.getElementById('wait_for_loading');
 
+
+		
 		// ДЗ API №1
 		function dataAcquisitionFunction () {
-					// Блокирую кнопу 
-		buttonElement.disabled = true;
-		buttonElement.textContent = 'Комментарий загружается'
+			buttonElement.disabled = true;
+				buttonElement.textContent = 'Комментарий загружается'
 		//Делаю переменные из видео
 			const startAt = Date.now();
 			console.log('Запрос начался');
@@ -91,10 +92,10 @@
 			"https://wedev-api.sky.pro/api/v1/Pavel-Kalashnikoff/comments",
 			{
 				method: "GET"
-			}
-		).then((response) => {
+			}).then((response) => {
 			return response.json();
 		}).then((responseData) => {
+			//Обращаюсь к массиву из API
 				commentators = responseData.comments.map((comment) => {
 					//Добавил константы даты и времени.
 					const currentDate = new Date(comment.date).toLocaleDateString('ru-Ru');
@@ -109,13 +110,13 @@
 				});
 				renderCommentators();
 				waitForLoading.classList.add('hide'); 
+			}).then((response)=>{
+				
 			}).then((response) => {
-			return 'Глуб'
-		}).then((data) => {
-			console.log(data);
+			buttonElement.classList.remove('gray')
+			buttonElement.disabled = false;
+			buttonElement.textContent = 'Написать';
 		});
-		buttonElement.disabled = false;
-		buttonElement.textContent = 'Написать';
 		}
 		dataAcquisitionFunction ();
 
@@ -235,7 +236,6 @@
 			// Клик на кнопку "Написать"
 			buttonElement.addEventListener("click", () => {
 
-		
 			//Добавляю новый коммент в список
 				const featchPushComment = fetch(
 					"https://wedev-api.sky.pro/api/v1/Pavel-Kalashnikoff/comments",
