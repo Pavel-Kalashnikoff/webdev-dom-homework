@@ -83,8 +83,9 @@
 		function dataAcquisitionFunction () {
 			buttonElement.disabled = true;
 				buttonElement.textContent = 'Комментарий загружается'
+				acceptName.disabled = true;
+				acceptComment.disabled = true;
 		//Делаю переменные из видео
-			const startAt = Date.now();
 			console.log('Запрос начался');
 
 			// Получаю данные из API 
@@ -114,6 +115,8 @@
 			buttonElement.classList.remove('gray')
 			buttonElement.disabled = false;
 			buttonElement.textContent = 'Написать';
+			acceptName.disabled = false;
+			acceptComment.disabled = false;
 		});
 		}
 		dataAcquisitionFunction ();
@@ -245,8 +248,10 @@
 							
 						}),
 					}
-				);
-				dataAcquisitionFunction();
+				).then((response) => {
+					dataAcquisitionFunction();
+				});
+				
 			// Очистка поля ввода для комментария и имени после отправления комментария
 			const clearCommmentTextArea = document.querySelector('.add-form-text');
 			const clearName = document.querySelector('.add-form-name');
@@ -259,4 +264,3 @@
 		checkInputs();
   </script>
 </html>
-
