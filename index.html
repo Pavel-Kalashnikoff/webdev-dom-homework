@@ -83,8 +83,7 @@
 		function dataAcquisitionFunction () {
 			buttonElement.disabled = true;
 				buttonElement.textContent = 'Комментарий загружается'
-				acceptName.disabled = true;
-				acceptComment.disabled = true;
+
 		//Делаю переменные из видео
 			console.log('Запрос начался');
 
@@ -236,7 +235,8 @@
 
 			// Клик на кнопку "Написать"
 			buttonElement.addEventListener("click", () => {
-
+				acceptName.disabled = true;
+				acceptComment.disabled = true;
 			//Добавляю новый коммент в список
 				const featchPushComment = fetch(
 					"https://wedev-api.sky.pro/api/v1/Pavel-Kalashnikoff/comments",
