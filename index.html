@@ -245,19 +245,21 @@
 				replyToCommentFunction();
 				inactiveDeleteButton();
 			};
-			
-			const shortName = acceptName.value ;
-			const shortComment = acceptComment.value;
+
 			// Клик на кнопку "Написать"
 			buttonElement.addEventListener("click", () => {
+		
+				// Записываю введенные данные в переменные 
+			const shortName = acceptName.value ;
+			const shortComment = acceptComment.value;
 			//Добавляю новый коммент в список
 				const featchPushComment = fetch(
 					"https://wedev-api.sky.pro/api/v1/Pavel-Kalashnikoff/comments",
 					{
 						method: "POST",	
 						body:	JSON.stringify ({
-							text: acceptComment.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
-							name: acceptName.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+						text: acceptComment.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+						name: acceptName.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
 							
 						}),
 					}
@@ -290,6 +292,7 @@
 						return;
 					} else {
 						alert("Кажется, у нас сломался сервер, повторите попытку позже");
+						
 						return;
 					}
 				});
