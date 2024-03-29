@@ -44,6 +44,9 @@
           </div>
         </li> -->
       </ul>
+			<div id="wait_for_loading">
+				<p class="comment_start_time">Пожалуйста подождите, комментарии загружаются.</p>
+			</div>
       <div class="add-form">
         <input id="input-accept-name"
           type="text"
@@ -72,26 +75,29 @@
 		const acceptName = document.getElementById('input-accept-name');
 		const acceptComment = document.getElementById('textarea-accept-comment');
 		const buttonDelete =  document.getElementById('delete-button');
+		const waitForLoading = document.getElementById('wait_for_loading');
 
+
+		
 		// ДЗ API №1
 		function dataAcquisitionFunction () {
-			
+			buttonElement.disabled = true;
+				buttonElement.textContent = 'Комментарий загружается'
+
+		//Делаю переменные из видео
+			console.log('Запрос начался');
+
 			// Получаю данные из API 
-		const fetchPromise = fetch(
+		fetch(
 			"https://wedev-api.sky.pro/api/v1/Pavel-Kalashnikoff/comments",
 			{
 				method: "GET"
-			}
-		);
-		fetchPromise.then((response) => {
-
-			const jsonPromise = response.json();
-			
-			jsonPromise.then((responseData) => {
-				console.log(responseData);
-
+			}).then((response) => {
+			return response.json();
+		}).then((responseData) => {
+			//Обращаюсь к массиву из API
 				commentators = responseData.comments.map((comment) => {
-					//Добавил константы даты и времени
+					//Добавил константы даты и времени.
 					const currentDate = new Date(comment.date).toLocaleDateString('ru-Ru');
 					const currentTime = new Date(comment.date).toLocaleTimeString('ru-RU');
 					return {
@@ -103,12 +109,19 @@
 					};
 				});
 				renderCommentators();
-			});
+				waitForLoading.classList.add('hide'); 
+			}).then((response) => {
+			buttonElement.classList.remove('gray')
+			buttonElement.disabled = false;
+			buttonElement.textContent = 'Написать';
+			acceptName.disabled = false;
+			acceptComment.disabled = false;
 		});
 		}
-		dataAcquisitionFunction();
+		dataAcquisitionFunction ();
 
-		//Добавляю массив на основе разметки HTML 
+		
+		//Добавляю массив на основе разметки HTML.
 		let commentators = [];
  
 			// Доп. задание - делаю кнопку неактивной при незаполненом поле
@@ -222,8 +235,8 @@
 
 			// Клик на кнопку "Написать"
 			buttonElement.addEventListener("click", () => {
-
-		
+				acceptName.disabled = true;
+				acceptComment.disabled = true;
 			//Добавляю новый коммент в список
 				const featchPushComment = fetch(
 					"https://wedev-api.sky.pro/api/v1/Pavel-Kalashnikoff/comments",
@@ -235,9 +248,9 @@
 							
 						}),
 					}
-				);
-				dataAcquisitionFunction();
-
+				).then((response) => {
+					dataAcquisitionFunction();
+				});
 				
 			// Очистка поля ввода для комментария и имени после отправления комментария
 			const clearCommmentTextArea = document.querySelector('.add-form-text');
@@ -251,4 +264,3 @@
 		checkInputs();
   </script>
 </html>
-
