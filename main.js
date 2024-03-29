@@ -1,4 +1,7 @@
 "use strict";
+// Импортирую функцию запроса контента API
+import { getComment, postComment } from "./api.js";
+
 // Объявляю константы для хранения данных
 const buttonElement = document.getElementById('add-button');
 const listElement = document.getElementById('comment-script');
@@ -19,20 +22,8 @@ function dataAcquisitionFunction () {
 	console.log('Запрос начался');
 
 	// Получаю данные из API 
-fetch(
-	"https://wedev-api.sky.pro/api/v1/Pavel-Kalashnikoff/comments",
-	{
-		method: "GET"
-	}).then((response) => {
-		// Ставлю условие, если статус 500, то возвращаю промис с ключевыми словами - "Упавший сервер"
-		// Иначе дальше выполняю код
-	if (response.status === 500) {
-		return Promise.reject("Упавший сервер");
-	}
-	else {
-		return response.json();
-	}
-}).then((responseData) => {
+	// Вызываю функцию getComment из модуля
+getComment().then((responseData) => {
 	//Обращаюсь к массиву из API
 		commentators = responseData.comments.map((comment) => {
 			//Добавил константы даты и времени.
@@ -183,30 +174,13 @@ for (const replyComment of replyComments) {
 	const shortName = acceptName.value ;
 	const shortComment = acceptComment.value;
 	//Добавляю новый коммент в список
-		const featchPushComment = fetch(
-			"https://wedev-api.sky.pro/api/v1/Pavel-Kalashnikoff/comments",
-			{
-				method: "POST",	
-				body:	JSON.stringify ({
-				text: acceptComment.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
-				name: acceptName.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
-					
-				}),
-			}
-		).then((response) => {
-			// Добавляю условие если статус ошибки 400 и кол-во символов в полях меньше 3
-			// То возвращаяю промис с ключевыми словами иначе дальше выполняю код
-			if (response.status === 400 && (shortName.length < 3|| shortComment.length < 3)) {
-				return Promise.reject("Короткий запрос");
-			}
-			if (response.status === 500) {
-		return Promise.reject("Упавший сервер");
-			}
-		else {
-				return response.json();
-			}
-		}).
-		then((response) => {
+	
+	//Вызываю фукнцию поста комментария из модуля API
+		postComment({
+			text: acceptName.value,
+			name: acceptComment.value
+		})
+		.then((response) => {
 			dataAcquisitionFunction();
 			// Добавляю обработчик ошибки и при условии, что сообщение ошибки будет - "Упавший сервер",
 			// То вывожу алерт, 
