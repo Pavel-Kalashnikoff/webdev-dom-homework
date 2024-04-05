@@ -1,5 +1,5 @@
 "use strict";
-// Импортирую функцию запроса контента API
+// Импортирую функцию запроса контента API и др.
 import { getComment, postComment } from "./api.js";
 
 // Объявляю константы для хранения данных
@@ -122,7 +122,7 @@ for (const likeButton of likesButtonElement) {
 
 
 let text; 
-let variableUserName;
+
 // ДЗ 2.11 --- Реализую ответ на комментарий
 const replyToCommentFunction = () => {
 const replyComments = document.querySelectorAll('.comment-text');

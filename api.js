@@ -1,3 +1,4 @@
+// Функция получения комментария из API
 export function getComment() {
 	return fetch(
 		"https://wedev-api.sky.pro/api/v1/Pavel-Kalashnikoff/comments",
@@ -14,7 +15,7 @@ export function getComment() {
 		}
 	});
 }
-
+// Функция написания комментария
 export function postComment({text, name}) {
 	return fetch(
 		"https://wedev-api.sky.pro/api/v1/Pavel-Kalashnikoff/comments",
@@ -39,3 +40,4 @@ export function postComment({text, name}) {
 		};
 	});
 }
+
