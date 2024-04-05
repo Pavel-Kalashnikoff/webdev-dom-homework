@@ -1,4 +1,5 @@
 "use strict";
+import { checkInputs } from "./additional.js";
 // Импортирую функцию запроса контента API и др.
 import { getComment, postComment } from "./api.js";
 
@@ -18,8 +19,6 @@ function dataAcquisitionFunction () {
 		buttonElement.textContent = 'Комментарий загружается'
 		acceptName.disabled = true;
 		acceptComment.disabled = true;
-//Делаю переменные из видео
-	console.log('Запрос начался');
 
 	// Получаю данные из API 
 	// Вызываю функцию getComment из модуля
@@ -45,6 +44,7 @@ getComment().then((responseData) => {
 	buttonElement.textContent = 'Написать';
 	acceptName.disabled = false;
 	acceptComment.disabled = false;
+
 	// Добавляю catch для обработки ошибки статуса 500
 }).catch((error) => {
 	if (error === "Упавший сервер") {
@@ -53,25 +53,15 @@ getComment().then((responseData) => {
 	}
 });
 };
+
 dataAcquisitionFunction ();
 
 
 //Добавляю массив на основе разметки HTML.
 let commentators = [];
 
-	// Доп. задание - делаю кнопку неактивной при незаполненом поле
-function checkInputs() {
-if (acceptName.value.trim() === "" || acceptComment.value.trim() === "") {
-	buttonElement.disabled = true;
-	buttonElement.classList.add("gray");
-} else {
-	buttonElement.disabled = false;
-	buttonElement.classList.remove("gray");
-};
-};
-acceptName.addEventListener("input", checkInputs);
-acceptComment.addEventListener("input", checkInputs);
-checkInputs();
+		//Вызываю фукнцию из другого модуля по доп. заданиям
+		checkInputs(acceptName, acceptComment, buttonElement);
 
 // 	// Доп. задание - добавляю кнопку удалить и пишу её функционал
 buttonDelete.addEventListener('click', () => {
