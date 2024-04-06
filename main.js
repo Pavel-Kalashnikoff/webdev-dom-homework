@@ -12,7 +12,8 @@ const acceptComment = document.getElementById('textarea-accept-comment');
 const buttonDelete =  document.getElementById('delete-button');
 const waitForLoading = document.getElementById('wait_for_loading');
 
-
+//Добавляю массив на основе разметки HTML.
+let commentators = [];
 
 // ДЗ API №1
 function dataAcquisitionFunction () {
@@ -55,14 +56,9 @@ getComment().then((responseData) => {
 });
 };
 
-
 	dataAcquisitionFunction ();
-//Добавляю массив на основе разметки HTML.
-let commentators = [];
 
 	renderCommentators();
-
-
 
 		//Вызываю фукнцию из другого модуля по доп. заданиям
 		checkInputs(acceptName, acceptComment, buttonElement);
