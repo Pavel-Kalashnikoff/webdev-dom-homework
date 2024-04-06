@@ -1,4 +1,5 @@
 "use strict";
+import { renderCommentators } from "./renderComment.js";
 import { checkInputs } from "./additional.js";
 // Импортирую функцию запроса контента API и др.
 import { getComment, postComment } from "./api.js";
@@ -54,11 +55,14 @@ getComment().then((responseData) => {
 });
 };
 
-dataAcquisitionFunction ();
 
-
+	dataAcquisitionFunction ();
 //Добавляю массив на основе разметки HTML.
 let commentators = [];
+
+	renderCommentators();
+
+
 
 		//Вызываю фукнцию из другого модуля по доп. заданиям
 		checkInputs(acceptName, acceptComment, buttonElement);
@@ -130,34 +134,8 @@ for (const replyComment of replyComments) {
 	});
 };
 };
-	//Рендер функция
-	const renderCommentators = () => {
-	const commentatorHTML = commentators.map((commentator, index) => {
-			return `<li class="comment">
-			<div data-user="${commentator.name}" class="comment-header">
-				${commentator.name}
-				<div>${commentator.data}</div>
-			</div>
-			<div class="comment-body">
-				<div data-text=">-${commentator.comment}" class="comment-text">
-					${commentator.comment}
-				</div>
-			</div>
-			<div class="comment-footer">
-				<div class="likes">
-					<span data-like="0" class="likes-counter">${commentator.like}</span>
-					<button class="like-button ${commentator.isLike ? '-active-like' : ''}" data-index="${index}" ></button>
-				</div>
-			</div>
-		</li>`;
-		}).join("");
-		listElement.innerHTML = commentatorHTML;
-		addLikeButtonEventListener();
-		replyToCommentFunction();
-		inactiveDeleteButton();
-	};
 
-	// Клик на кнопку "Написать"
+// Клик на кнопку "Написать"
 	buttonElement.addEventListener("click", () => {
 
 		// Записываю введенные данные в переменные 
