@@ -1,8 +1,8 @@
-	
-	
+import { addLikeButtonEventListener } from "./ButtonLike";
 
+	
 	//Рендер функция
- export	const renderCommentators = () => {
+ export	const renderCommentators = (commentators, listElement) => {
 		const commentatorHTML = commentators.map((commentator, index) => {
 				return `<li class="comment">
 				<div data-user="${commentator.name}" class="comment-header">

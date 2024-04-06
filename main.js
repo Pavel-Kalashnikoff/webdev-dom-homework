@@ -1,8 +1,10 @@
 "use strict";
+import { addLikeButtonEventListener } from "./ButtonLike.js";
 import { renderCommentators } from "./renderComment.js";
 import { checkInputs } from "./additional.js";
 // Импортирую функцию запроса контента API и др.
 import { getComment, postComment } from "./api.js";
+
 
 // Объявляю константы для хранения данных
 const buttonElement = document.getElementById('add-button');
@@ -55,13 +57,15 @@ getComment().then((responseData) => {
 	}
 });
 };
-
 	dataAcquisitionFunction ();
 
-	renderCommentators();
+// Вызываю фукнцию лайка из другого модуля - после этого всё полетело ошибка 404
+	addLikeButtonEventListener();
+// Вызываю функцию рендера комментов из другого модуля
+	renderCommentators(commentators, listElement);
 
-		//Вызываю фукнцию из другого модуля по доп. заданиям
-		checkInputs(acceptName, acceptComment, buttonElement);
+	//Вызываю фукнцию из другого модуля по доп. заданиям
+	checkInputs(acceptName, acceptComment, buttonElement);
 
 // 	// Доп. задание - добавляю кнопку удалить и пишу её функционал
 buttonDelete.addEventListener('click', () => {
@@ -88,27 +92,7 @@ document.addEventListener('keydown', function(e) {
 		}
 	})
 
-//Добавляю функцию лайка
-const addLikeButtonEventListener = () => {
-	const likesButtonElement = document.querySelectorAll('.like-button');
-for (const likeButton of likesButtonElement) {
-	let isLike = false;
-	likeButton.addEventListener("click", event => {
-		event.stopPropagation();
-		const index = likeButton.dataset.index;
-		if (commentators[index].isLike === false) {
-			commentators[index].isLike = true;
-			commentators[index].like++;
-		} else {
-			commentators[index].isLike = false;
-			commentators[index].like--;
-		}
-		likeButton.classList.toggle('-active-like', commentators[index].isLike);
-		renderCommentators();
-		checkInputs();
-	});
-};
-};
+
 
 
 let text; 
