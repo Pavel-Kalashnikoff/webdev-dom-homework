@@ -1,3 +1,4 @@
+// Импорт функций и элементов 
 import { checkInputs } from "./additional.js";
 import { postComment } from "./api.js";
 import { dataAcquisitionFunction } from "./main.js";
@@ -16,6 +17,9 @@ export function ClickOnTheButton (buttonElement, acceptName, acceptComment) {
 			text: acceptName.value,
 			name: acceptComment.value
 		})
+		// Почему здесь response так же неактивный? Ведь в функции postComment
+		// у меня данные возвращаются в формате - return response.json();
+		// Не понимаю
 		.then((response) => {
 			dataAcquisitionFunction();
 			// Добавляю обработчик ошибки и при условии, что сообщение ошибки будет - "Упавший сервер",

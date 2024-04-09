@@ -16,6 +16,7 @@ export function getComment() {
 		}
 	});
 }
+
 // Функция написания комментария
 export function postComment({text, name}) {
 	return fetch(

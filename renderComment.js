@@ -1,4 +1,4 @@
-
+// Импорт функций и элементов 
 import { addLikeButtonEventListener } from "./ButtonLike.js";
 import { replyToCommentFunction } from "./replyToComment.js";
 import { inactiveDeleteButton } from "./inactiveDeleteButton.js";
