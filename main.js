@@ -1,9 +1,13 @@
+
 "use strict";
 import { addLikeButtonEventListener } from "./ButtonLike.js";
 import { renderCommentators } from "./renderComment.js";
-import { checkInputs } from "./additional.js";
+import { checkInputs, sendByPressingKey } from "./additional.js";
 // Импортирую функцию запроса контента API и др.
-import { getComment, postComment } from "./api.js";
+import { getComment} from "./api.js";
+import { inactiveDeleteButton } from "./inactiveDeleteButton.js";
+import { replyToCommentFunction } from "./replyToComment.js";
+import { ClickOnTheButton } from "./ClikOnTheButton.js";
 
 
 // Объявляю константы для хранения данных
@@ -14,11 +18,12 @@ const acceptComment = document.getElementById('textarea-accept-comment');
 const buttonDelete =  document.getElementById('delete-button');
 const waitForLoading = document.getElementById('wait_for_loading');
 
+export default buttonDelete;
 //Добавляю массив на основе разметки HTML.
-let commentators = [];
+export let commentators = [];
 
 // ДЗ API №1
-function dataAcquisitionFunction () {
+export function dataAcquisitionFunction () {
 	buttonElement.disabled = true;
 		buttonElement.textContent = 'Комментарий загружается'
 		acceptName.disabled = true;
@@ -40,7 +45,7 @@ getComment().then((responseData) => {
 				isLike: comment.isLiked
 			};
 		});
-		renderCommentators();
+		renderCommentators(commentators, listElement);
 		waitForLoading.classList.add('hide'); 
 	}).then((response) => {
 	buttonElement.classList.remove('gray')
@@ -59,103 +64,30 @@ getComment().then((responseData) => {
 };
 	dataAcquisitionFunction ();
 
-// Вызываю фукнцию лайка из другого модуля - после этого всё полетело ошибка 404
+// Вызываю фукнцию лайка из другого модуля 
 	addLikeButtonEventListener();
-// Вызываю функцию рендера комментов из другого модуля
-	renderCommentators(commentators, listElement);
-
-	//Вызываю фукнцию из другого модуля по доп. заданиям
+	//Вызываю фукнцию "неактивная кнопка написать при не заполеном поле"
 	checkInputs(acceptName, acceptComment, buttonElement);
 
 // 	// Доп. задание - добавляю кнопку удалить и пишу её функционал
 buttonDelete.addEventListener('click', () => {
 commentators.pop();
-renderCommentators();
+renderCommentators(commentators, listElement);
 checkInputs();
 });
 
-// Функция, которая делает кнопку "удалить" неактивной когда в массиве нет элементов
-function inactiveDeleteButton() {
-if (commentators.length === 0) {
-	buttonDelete.disabled = true;
-	buttonDelete.classList.add("gray-delete");
-} else {
-	buttonDelete.disabled = false;
-	buttonDelete.classList.remove("gray-delete");
-}
-};
-
-// // Делаю доп.задание отправляю коммент по нажатию клавиши
-document.addEventListener('keydown', function(e) {
-		if (e.key === 'Enter') {
-			buttonElement.click();
-		}
-	})
-
-
+// Вызываю функцию неактивной кнопки "удалить" при отсутствии комментов
+inactiveDeleteButton();
+//Вызываю фукнцию нажатия Enter
+sendByPressingKey(buttonElement);
 
 
 let text; 
 
-// ДЗ 2.11 --- Реализую ответ на комментарий
-const replyToCommentFunction = () => {
-const replyComments = document.querySelectorAll('.comment-text');
-const commentTextArea = document.getElementById('textarea-accept-comment');
-for (const replyComment of replyComments) {
-	replyComment.addEventListener("click", event => {
-		event.stopPropagation();
+replyToCommentFunction(text);
 
-	const replyUserName = event.target.closest('.comment').querySelector('.comment-header').dataset.user;
-	text = replyComment.dataset.text;
-	commentTextArea.value = text + ' ' + '\n : - ' + replyUserName;
+// Вызываю фукнцию клика на кнопку "написать"
+ClickOnTheButton(buttonElement, acceptName, acceptComment);
 
-		renderCommentators();
-		checkInputs();
-	});
-};
-};
-
-// Клик на кнопку "Написать"
-	buttonElement.addEventListener("click", () => {
-
-		// Записываю введенные данные в переменные 
-	const shortName = acceptName.value ;
-	const shortComment = acceptComment.value;
-	//Добавляю новый коммент в список
-	
-	//Вызываю фукнцию поста комментария из модуля API
-		postComment({
-			text: acceptName.value,
-			name: acceptComment.value
-		})
-		.then((response) => {
-			dataAcquisitionFunction();
-			// Добавляю обработчик ошибки и при условии, что сообщение ошибки будет - "Упавший сервер",
-			// То вывожу алерт, 
-			// Изменил логику, не знаю в правильную ли сторону? 
-			// Получается, при срабатывании ошибки ставлю условие, если ошибка имеет ключевые слова 
-			// То выполняю код в if, иначе при другой ошибке т.е. 500 выполняю код о сообщении ошибки сервера.
-		}).catch((error) => {
-			console.log(error)
-			if (error === "Короткий запрос") {
-				alert("Вы ввели слишком короткий запрос. Запрос должен быть не менее 3 символов");
-				acceptName.value = shortName;
-				acceptComment.value = shortComment;
-				return;
-			} else {
-				alert("Кажется, у нас сломался сервер, повторите попытку позже");
-				
-				return;
-			}
-		});
-		
-	// Очистка поля ввода для комментария и имени после отправления комментария
-	const clearCommmentTextArea = document.querySelector('.add-form-text');
-	const clearName = document.querySelector('.add-form-name');
-	clearCommmentTextArea.value = '';
-	clearName.value = '';
-	renderCommentators();
-	checkInputs();
-});
-renderCommentators();
+renderCommentators(commentators, listElement);
 checkInputs();

@@ -1,4 +1,5 @@
-import { renderCommentators } from "./renderComment";
+
+import { renderCommentators } from "./renderComment.js";
 import { checkInputs } from "./additional.js";
 
 //Добавляю функцию лайка

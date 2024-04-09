@@ -1,3 +1,4 @@
+
 // Функция получения комментария из API
 export function getComment() {
 	return fetch(

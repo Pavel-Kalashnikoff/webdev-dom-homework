@@ -12,3 +12,12 @@ export function checkInputs(acceptName, acceptComment, buttonElement) {
 		acceptName.addEventListener("input", checkInputs);
 		acceptComment.addEventListener("input", checkInputs);
 }
+
+export function sendByPressingKey(buttonElement) {
+// // Делаю доп.задание отправляю коммент по нажатию клавиши
+document.addEventListener('keydown', function(e) {
+	if (e.key === 'Enter') {
+		buttonElement.click();
+	}
+})
+}
