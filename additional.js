@@ -2,10 +2,14 @@
 	
 	// Доп. задание - создаю фукнцию для неактивной кнопки при незаполненом поле
 	// Передаю в качестве аргументов константы и далее их использую, где тут может быть ошибка? 
-export function checkInputs(acceptName, acceptComment, buttonElement) {
+
+import { acceptComment, acceptName } from "./main.js";
+
+	// Заменил acceptName на nameVar
+export function checkInputs(nameVar, commentVar, buttonElement) {
 	// Именно здесь не работает метод trim, он похоже не понимает переменную acceptName и acceptComment
 	// Похоже я как-то неправильно передал переменные в качестве аргумента
-		if (acceptName.value.trim() === "" || acceptComment.value.trim() === "") {
+		if (nameVar.trim() === "" || commentVar.trim() === "") {
 			buttonElement.disabled = true;
 			buttonElement.classList.add("gray");
 		} else {

@@ -13,12 +13,18 @@ import { ClickOnTheButton } from "./ClikOnTheButton.js";
 // Объявляю константы для хранения элементов HTML
 const buttonElement = document.getElementById('add-button');
 const listElement = document.getElementById('comment-script');
-const acceptName = document.getElementById('input-accept-name');
-const acceptComment = document.getElementById('textarea-accept-comment');
+export const acceptName = document.getElementById('input-accept-name');
+export const acceptComment = document.getElementById('textarea-accept-comment');
 const buttonDelete =  document.getElementById('delete-button');
 const waitForLoading = document.getElementById('wait_for_loading');
+
+
+let nameVar = acceptName.value;
+let commentVar = acceptComment.value;
+
 //Экспортирую элемент buttonDelete для доступа к другим модулям (А не лучше ли так делать, вместо аргументов фукнций? )
 export default buttonDelete;
+
 //Добавляю массив на основе разметки HTML.
 export let commentators = [];
 
@@ -70,7 +76,7 @@ getComment().then((responseData) => {
 // Вызываю фукнцию лайка из другого модуля 
 	addLikeButtonEventListener();
 	//Вызываю фукнцию "неактивная кнопка 'написать' при не заполеном поле" - здесь возникли проблемы с методом trim
-	checkInputs(acceptName, acceptComment, buttonElement);
+	checkInputs(nameVar, commentVar, buttonElement);
 
 	// Доп. задание - добавляю кнопку удалить и пишу её функционал
 buttonDelete.addEventListener('click', () => {
