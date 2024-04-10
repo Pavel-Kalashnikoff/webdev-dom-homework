@@ -21,7 +21,7 @@ export function ClickOnTheButton (buttonElement, acceptName, acceptComment) {
 		// у меня данные возвращаются в формате - return response.json();
 		// Не понимаю
 		.then((response) => {
-			dataAcquisitionFunction();
+			dataAcquisitionFunction(buttonElement, acceptName, acceptComment, commentators, waitForLoading);
 			// Добавляю обработчик ошибки и при условии, что сообщение ошибки будет - "Упавший сервер",
 			// То вывожу алерт, 
 			// Изменил логику, не знаю в правильную ли сторону? 
@@ -47,7 +47,7 @@ export function ClickOnTheButton (buttonElement, acceptName, acceptComment) {
 	clearCommmentTextArea.value = '';
 	clearName.value = '';
 	renderCommentators(commentators, listElement);
-	checkInputs();
+	checkInputs(nameVar, commentVar, buttonElement);
 	});
 }
 

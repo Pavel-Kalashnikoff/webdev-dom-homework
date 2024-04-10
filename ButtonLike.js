@@ -1,13 +1,10 @@
 // Импорт функций и элементов 
 import { renderCommentators } from "./renderComment.js";
-import { checkInputs } from "./additional.js";
 
 //Добавляю функцию лайка
 export const addLikeButtonEventListener = () => {
 	const likesButtonElement = document.querySelectorAll('.like-button');
 for (const likeButton of likesButtonElement) {
-	// Почему неактивна переменная ? Ведь ниже по строчкам она используется при обращении к массиву
-	// Этот момент мне не понятен
 	let isLike = false;
 	// Делаю прослушиватель клика на кнопку лайка
 	likeButton.addEventListener("click", event => {
@@ -22,7 +19,7 @@ for (const likeButton of likesButtonElement) {
 		}
 		likeButton.classList.toggle('-active-like', commentators[index].isLike);
 		//Вызываю рендер комментов
-		renderCommentators();
+		renderCommentators(commentators, listElement);
 	});
 };
 };

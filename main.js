@@ -4,7 +4,7 @@
 import { addLikeButtonEventListener } from "./ButtonLike.js";
 import { renderCommentators } from "./renderComment.js";
 import { checkInputs, sendByPressingKey } from "./additional.js";
-import { getComment} from "./api.js";
+import { getComment } from "./api.js";
 import { inactiveDeleteButton } from "./inactiveDeleteButton.js";
 import { replyToCommentFunction } from "./replyToComment.js";
 import { ClickOnTheButton } from "./ClikOnTheButton.js";
@@ -22,14 +22,13 @@ const waitForLoading = document.getElementById('wait_for_loading');
 let nameVar = acceptName.value;
 let commentVar = acceptComment.value;
 
-//Экспортирую элемент buttonDelete для доступа к другим модулям (А не лучше ли так делать, вместо аргументов фукнций? )
-export default buttonDelete;
+
 
 //Добавляю массив на основе разметки HTML.
 export let commentators = [];
 
 // API Экспорт функции получения данных 
-export function dataAcquisitionFunction () {
+export function dataAcquisitionFunction (buttonElement, acceptName, acceptComment, commentators, waitForLoading) {
 	buttonElement.disabled = true;
 		buttonElement.textContent = 'Комментарий загружается'
 		acceptName.disabled = true;
@@ -54,8 +53,6 @@ getComment().then((responseData) => {
 		});
 		renderCommentators(commentators, listElement);
 		waitForLoading.classList.add('hide'); 
-		// Не понимаю почему тут response неактивен, получается у then нет данных которые он принимает?
-		// Скорее всего, потому, что он получает данные после функции  renderCommentators
 	}).then((response) => {
 	buttonElement.classList.remove('gray')
 	buttonElement.disabled = false;
@@ -82,11 +79,11 @@ getComment().then((responseData) => {
 buttonDelete.addEventListener('click', () => {
 commentators.pop();
 renderCommentators(commentators, listElement);
-checkInputs();
+checkInputs(nameVar, commentVar, buttonElement);
 });
 
 // Вызываю функцию неактивной кнопки "удалить" при отсутствии комментов
-inactiveDeleteButton();
+inactiveDeleteButton(commentators, buttonDelete);
 //Вызываю фукнцию нажатия Enter
 sendByPressingKey(buttonElement);
 
@@ -100,4 +97,4 @@ ClickOnTheButton(buttonElement, acceptName, acceptComment);
 
 // Вызываю две фукнции для корректной работы страницы
 renderCommentators(commentators, listElement);
-checkInputs();
+checkInputs(nameVar, commentVar, buttonElement);
