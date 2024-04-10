@@ -68,7 +68,7 @@ getComment().then((responseData) => {
 });
 };
 // Вызываю фукнцию получения данных из API для её работы
-	dataAcquisitionFunction ();
+	dataAcquisitionFunction (buttonElement, acceptName, acceptComment, commentators, waitForLoading);
 
 // Вызываю фукнцию лайка из другого модуля 
 	addLikeButtonEventListener();
