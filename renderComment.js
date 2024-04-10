@@ -27,7 +27,7 @@ import { inactiveDeleteButton } from "./inactiveDeleteButton.js";
 			}).join("");
 			listElement.innerHTML = commentatorHTML;
 			addLikeButtonEventListener();
-			replyToCommentFunction(text);
+			replyToCommentFunction();
 			inactiveDeleteButton(commentators, buttonDelete);
 		};
 	

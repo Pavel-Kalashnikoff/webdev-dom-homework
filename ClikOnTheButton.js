@@ -47,7 +47,7 @@ export function ClickOnTheButton (buttonElement, acceptName, acceptComment) {
 	clearCommmentTextArea.value = '';
 	clearName.value = '';
 	renderCommentators(commentators, listElement);
-	checkInputs(nameVar, commentVar, buttonElement);
+	checkInputs(nameVar, commentVar, buttonElement, acceptComment, acceptName);
 	});
 }
 

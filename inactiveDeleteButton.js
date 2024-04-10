@@ -10,3 +10,13 @@ export function inactiveDeleteButton(commentators, buttonDelete) {
 		buttonDelete.classList.remove("gray-delete");
 	}
 	};
+
+	export function buttonDeleteFunction (buttonDelete) {
+			// Доп. задание - добавляю кнопку удалить и пишу её функционал
+buttonDelete.addEventListener('click', () => {
+	commentators.pop();
+	renderCommentators(commentators, listElement);
+	checkInputs(nameVar, commentVar, buttonElement, acceptComment, acceptName);
+	});
+	
+	}

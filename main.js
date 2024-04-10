@@ -5,7 +5,7 @@ import { addLikeButtonEventListener } from "./ButtonLike.js";
 import { renderCommentators } from "./renderComment.js";
 import { checkInputs, sendByPressingKey } from "./additional.js";
 import { getComment } from "./api.js";
-import { inactiveDeleteButton } from "./inactiveDeleteButton.js";
+import { buttonDeleteFunction, inactiveDeleteButton } from "./inactiveDeleteButton.js";
 import { replyToCommentFunction } from "./replyToComment.js";
 import { ClickOnTheButton } from "./ClikOnTheButton.js";
 
@@ -73,28 +73,22 @@ getComment().then((responseData) => {
 // Вызываю фукнцию лайка из другого модуля 
 	addLikeButtonEventListener();
 	//Вызываю фукнцию "неактивная кнопка 'написать' при не заполеном поле" - здесь возникли проблемы с методом trim
-	checkInputs(nameVar, commentVar, buttonElement);
+	checkInputs(nameVar, commentVar, buttonElement, acceptComment, acceptName);
 
-	// Доп. задание - добавляю кнопку удалить и пишу её функционал
-buttonDelete.addEventListener('click', () => {
-commentators.pop();
-renderCommentators(commentators, listElement);
-checkInputs(nameVar, commentVar, buttonElement);
-});
 
 // Вызываю функцию неактивной кнопки "удалить" при отсутствии комментов
 inactiveDeleteButton(commentators, buttonDelete);
 //Вызываю фукнцию нажатия Enter
 sendByPressingKey(buttonElement);
+// Вызываю функцию кнопки удалить
+buttonDeleteFunction(buttonDelete);
 
-
-let text; 
 //Вызываю функцию Ответа на коммент
-replyToCommentFunction(text);
+replyToCommentFunction();
 
 // Вызываю фукнцию клика на кнопку "написать"
 ClickOnTheButton(buttonElement, acceptName, acceptComment);
 
 // Вызываю две фукнции для корректной работы страницы
 renderCommentators(commentators, listElement);
-checkInputs(nameVar, commentVar, buttonElement);
+checkInputs(nameVar, commentVar, buttonElement, acceptComment, acceptName);

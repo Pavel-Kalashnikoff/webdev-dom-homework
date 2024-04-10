@@ -5,7 +5,8 @@ import { checkInputs } from "./additional.js";
 import { renderCommentators } from "./renderComment.js";
 
 // ДЗ 2.11 --- Реализую ответ на комментарий
-export function replyToCommentFunction (text) {
+export function replyToCommentFunction () {
+	let text; 
 const replyComments = document.querySelectorAll('.comment-text');
 const commentTextArea = document.getElementById('textarea-accept-comment');
 for (const replyComment of replyComments) {
@@ -15,7 +16,7 @@ for (const replyComment of replyComments) {
 	text = replyComment.dataset.text;
 	commentTextArea.value = text + ' ' + '\n : - ' + replyUserName;
 		renderCommentators(commentators, listElement);
-		checkInputs(nameVar, commentVar, buttonElement);
+		checkInputs(nameVar, commentVar, buttonElement, acceptComment, acceptName);
 	});
 };
 };
