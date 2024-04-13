@@ -7,7 +7,7 @@ import { renderCommentators } from "./renderComment.js";
 
 
 // Клик на кнопку "Написать"
-export function ClickOnTheButton (buttonElement, acceptName, acceptComment) {
+export function ClickOnTheButton (commentators, buttonElement, acceptName, acceptComment, listElement, buttonDelete, waitForLoading) {
 	buttonElement.addEventListener("click", () => {
 		// Записываю введенные данные в переменные 
 	const shortName = acceptName.value ;
@@ -46,8 +46,8 @@ export function ClickOnTheButton (buttonElement, acceptName, acceptComment) {
 	const clearName = document.querySelector('.add-form-name');
 	clearCommmentTextArea.value = '';
 	clearName.value = '';
-	renderCommentators(commentators, listElement);
-	checkInputs(nameVar, commentVar, buttonElement, acceptComment, acceptName);
+	renderCommentators(commentators, listElement, buttonDelete);
+	checkInputs(buttonElement, acceptComment, acceptName);
 	});
 }
 

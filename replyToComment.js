@@ -16,7 +16,8 @@ for (const replyComment of replyComments) {
 	text = replyComment.dataset.text;
 	commentTextArea.value = text + ' ' + '\n : - ' + replyUserName;
 		renderCommentators(commentators, listElement);
-		checkInputs(nameVar, commentVar, buttonElement, acceptComment, acceptName);
+		checkInputs(buttonElement, acceptComment, acceptName);
+		
 	});
 };
 };

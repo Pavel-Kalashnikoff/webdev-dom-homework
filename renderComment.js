@@ -5,7 +5,7 @@ import { inactiveDeleteButton } from "./inactiveDeleteButton.js";
 
 	
 	//Рендер функция
- export	const renderCommentators = (commentators, listElement) => {
+ export	const renderCommentators = (commentators, listElement, buttonDelete) => {
 		const commentatorHTML = commentators.map((commentator, index) => {
 				return `<li class="comment">
 				<div data-user="${commentator.name}" class="comment-header">

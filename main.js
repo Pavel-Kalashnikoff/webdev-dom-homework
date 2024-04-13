@@ -15,13 +15,8 @@ const buttonElement = document.getElementById('add-button');
 const listElement = document.getElementById('comment-script');
 export const acceptName = document.getElementById('input-accept-name');
 export const acceptComment = document.getElementById('textarea-accept-comment');
-const buttonDelete =  document.getElementById('delete-button');
+export const buttonDelete =  document.getElementById('delete-button');
 const waitForLoading = document.getElementById('wait_for_loading');
-
-
-let nameVar = acceptName.value;
-let commentVar = acceptComment.value;
-
 
 
 //Добавляю массив на основе разметки HTML.
@@ -51,7 +46,7 @@ getComment().then((responseData) => {
 				isLike: comment.isLiked
 			};
 		});
-		renderCommentators(commentators, listElement);
+		renderCommentators(commentators, listElement, buttonDelete);
 		waitForLoading.classList.add('hide'); 
 	}).then((response) => {
 	buttonElement.classList.remove('gray')
@@ -73,7 +68,8 @@ getComment().then((responseData) => {
 // Вызываю фукнцию лайка из другого модуля 
 	addLikeButtonEventListener();
 	//Вызываю фукнцию "неактивная кнопка 'написать' при не заполеном поле" - здесь возникли проблемы с методом trim
-	checkInputs(nameVar, commentVar, buttonElement, acceptComment, acceptName);
+	checkInputs(buttonElement, acceptComment, acceptName);
+
 
 
 // Вызываю функцию неактивной кнопки "удалить" при отсутствии комментов
@@ -87,8 +83,8 @@ buttonDeleteFunction(buttonDelete);
 replyToCommentFunction();
 
 // Вызываю фукнцию клика на кнопку "написать"
-ClickOnTheButton(buttonElement, acceptName, acceptComment);
+ClickOnTheButton(commentators, buttonElement, acceptName, acceptComment, listElement, buttonDelete, waitForLoading);
 
 // Вызываю две фукнции для корректной работы страницы
-renderCommentators(commentators, listElement);
-checkInputs(nameVar, commentVar, buttonElement, acceptComment, acceptName);
+renderCommentators(commentators, listElement, buttonDelete);
+checkInputs(buttonElement, acceptComment, acceptName);

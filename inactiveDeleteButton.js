@@ -2,6 +2,7 @@
 
 // Функция, которая делает кнопку "удалить" неактивной, когда в массиве нет элементов
 export function inactiveDeleteButton(commentators, buttonDelete) {
+	// console.log (commentators);
 	if (commentators.length === 0) {
 		buttonDelete.disabled = true;
 		buttonDelete.classList.add("gray-delete");
@@ -16,7 +17,6 @@ export function inactiveDeleteButton(commentators, buttonDelete) {
 buttonDelete.addEventListener('click', () => {
 	commentators.pop();
 	renderCommentators(commentators, listElement);
-	checkInputs(nameVar, commentVar, buttonElement, acceptComment, acceptName);
+	checkInputs(buttonElement, acceptComment, acceptName);
 	});
-	
 	}

@@ -6,9 +6,13 @@
 // import { acceptComment, acceptName } from "./main.js";
 
 	// Заменил acceptName на nameVar
-export function checkInputs(nameVar, commentVar, buttonElement, acceptComment, acceptName) {
+export function checkInputs(buttonElement, acceptComment, acceptName) {
 	// Именно здесь не работает метод trim, он похоже не понимает переменную acceptName и acceptComment
 	// Похоже я как-то неправильно передал переменные в качестве аргумента
+		
+let nameVar = acceptName.value;
+let commentVar = acceptComment.value;
+
 		if (nameVar.trim() === "" || commentVar.trim() === "") {
 			buttonElement.disabled = true;
 			buttonElement.classList.add("gray");
@@ -16,8 +20,12 @@ export function checkInputs(nameVar, commentVar, buttonElement, acceptComment, a
 			buttonElement.disabled = false;
 			buttonElement.classList.remove("gray");
 		};
-		acceptName.addEventListener("input", checkInputs);
-		acceptComment.addEventListener("input", checkInputs);
+		acceptName.addEventListener("input", function () {
+			checkInputs(buttonElement, acceptComment, acceptName)
+		})
+		acceptComment.addEventListener("input", function () {
+			checkInputs(buttonElement, acceptComment, acceptName)
+		})
 }
 
 export function sendByPressingKey(buttonElement) {
