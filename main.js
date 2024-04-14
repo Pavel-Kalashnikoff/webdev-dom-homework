@@ -8,6 +8,7 @@ import { getComment } from "./api.js";
 import { buttonDeleteFunction, inactiveDeleteButton } from "./inactiveDeleteButton.js";
 import { replyToCommentFunction } from "./replyToComment.js";
 import { ClickOnTheButton } from "./ClikOnTheButton.js";
+import { renderLogin } from "./loginSkript.js";
 
 
 // Объявляю константы для хранения элементов HTML
@@ -18,9 +19,11 @@ export const acceptComment = document.getElementById('textarea-accept-comment');
 export const buttonDelete =  document.getElementById('delete-button');
 const waitForLoading = document.getElementById('wait_for_loading');
 
+console.log(buttonElement);
 
+renderLogin({dataAcquisitionFunction});
 //Добавляю массив на основе разметки HTML.
-export let commentators = [];
+export let commentators = []; 
 
 // API Экспорт функции получения данных 
 export function dataAcquisitionFunction (buttonElement, acceptName, acceptComment, commentators, waitForLoading) {
