@@ -19,7 +19,9 @@ export const acceptComment = document.getElementById('textarea-accept-comment');
 export const buttonDelete =  document.getElementById('delete-button');
 const waitForLoading = document.getElementById('wait_for_loading');
 
-renderLogin();
+console.log(buttonElement);
+
+renderLogin({dataAcquisitionFunction});
 //Добавляю массив на основе разметки HTML.
 export let commentators = []; 
 

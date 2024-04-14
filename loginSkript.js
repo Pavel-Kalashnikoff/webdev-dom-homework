@@ -1,7 +1,7 @@
 
 import { login, setToken, token } from "./api.js";
 
-export const renderLogin = () => {
+export const renderLogin = ({dataAcquisitionFunction}) => {
 	const appElement = document.getElementById("app")
 	const loginHTML = `<div class="container">
 	<div class="add-form">
@@ -35,6 +35,8 @@ login({
 	console.log (token);
 	setToken(responseData.user.token);
 	console.log (token);
+}).then(() =>{
+	dataAcquisitionFunction(buttonElement, acceptName, acceptComment, commentators, waitForLoading);
 })
 });
 
